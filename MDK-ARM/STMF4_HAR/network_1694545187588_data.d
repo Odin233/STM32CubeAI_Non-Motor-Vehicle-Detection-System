@@ -1,0 +1,16 @@
+stmf4_har\network_1694545187588_data.o: ../X-CUBE-AI/App/network_1694545187588_data.c
+stmf4_har\network_1694545187588_data.o: ../X-CUBE-AI/App/network_1694545187588_data.h
+stmf4_har\network_1694545187588_data.o: ../X-CUBE-AI/App/network_1694545187588_config.h
+stmf4_har\network_1694545187588_data.o: ../X-CUBE-AI/App/network_1694545187588_data_params.h
+stmf4_har\network_1694545187588_data.o: ../Middlewares/ST/AI/Inc/ai_platform.h
+stmf4_har\network_1694545187588_data.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+stmf4_har\network_1694545187588_data.o: D:\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+stmf4_har\network_1694545187588_data.o: D:\keil5\ARM\ARMCC\Bin\..\include\inttypes.h
+stmf4_har\network_1694545187588_data.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+stmf4_har\network_1694545187588_data.o: ../Middlewares/ST/AI/Inc/ai_platform_interface.h
+stmf4_har\network_1694545187588_data.o: ../Middlewares/ST/AI/Inc/datatypes_network.h
+stmf4_har\network_1694545187588_data.o: ../Middlewares/ST/AI/Inc/ai_datatypes.h
+stmf4_har\network_1694545187588_data.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
+stmf4_har\network_1694545187588_data.o: ../Middlewares/ST/AI/Inc/ai_datatypes_format.h
+stmf4_har\network_1694545187588_data.o: ../Middlewares/ST/AI/Inc/ai_datatypes_defines.h
+stmf4_har\network_1694545187588_data.o: ../Middlewares/ST/AI/Inc/formats_list.h

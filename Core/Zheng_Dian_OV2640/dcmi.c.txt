@@ -1,0 +1,13 @@
+/* USER CODE BEGIN 1 */
+void dcmi_start(void) {
+    __HAL_DMA_ENABLE(&hdma_dcmi);   /* 使能DMA */
+    DCMI->CR |= DCMI_CR_CAPTURE;            /* DCMI捕获使能 */
+}
+
+void dcmi_stop(void) {
+    DCMI->CR &= ~(DCMI_CR_CAPTURE);         /* DCMI捕获关闭 */
+    while (DCMI->CR & 0X01);                /* 等待传输结束 */
+    __HAL_DMA_DISABLE(&hdma_dcmi);  /* 关闭DMA */
+}
+/* USER CODE END 1 */
+

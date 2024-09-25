@@ -1,0 +1,14 @@
+stmf4_har\aipbmgr.o: ../X-CUBE-AI/App/aiPbMgr.c
+stmf4_har\aipbmgr.o: ../X-CUBE-AI/App/aiPbMgr.h
+stmf4_har\aipbmgr.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+stmf4_har\aipbmgr.o: ../X-CUBE-AI/App/pb.h
+stmf4_har\aipbmgr.o: D:\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+stmf4_har\aipbmgr.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+stmf4_har\aipbmgr.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
+stmf4_har\aipbmgr.o: ../X-CUBE-AI/App/stm32msg.pb.h
+stmf4_har\aipbmgr.o: ../X-CUBE-AI/App/aiPbIO.h
+stmf4_har\aipbmgr.o: ../X-CUBE-AI/App/pb_encode.h
+stmf4_har\aipbmgr.o: ../X-CUBE-AI/App/pb_decode.h
+stmf4_har\aipbmgr.o: ../X-CUBE-AI/App/ai_device_adaptor.h
+stmf4_har\aipbmgr.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+stmf4_har\aipbmgr.o: ../Drivers/CMSIS/Include/cmsis_armcc.h

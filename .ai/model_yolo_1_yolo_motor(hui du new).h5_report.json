@@ -1,0 +1,508 @@
+{
+    "_allocate_inputs": 4,
+    "_allocate_outputs": 4,
+    "cli_parameters": "generate --name model_yolo_1 -m E:/STMF4_HAR/yolo_motor(hui du new).h5 --type keras --compression medium --verbosity 1 --workspace C:\\Users\\11270\\AppData\\Local\\Temp\\mxAI_workspace10274332353023009338109488036088356 --output C:\\Users\\11270\\.stm32cubemx\\network_output --allocate-inputs --series stm32f4 --allocate-outputs",
+    "cli_version": {
+        "major": 1,
+        "micro": 0,
+        "minor": 7
+    },
+    "cli_version_str": "1.7.0",
+    "code_size": 0,
+    "compression": {
+        "factor": 7.754320390484148,
+        "layers": {
+            "dense_dense_weights": 8.0
+        }
+    },
+    "date_time": "Thu Oct 26 21:41:50 2023",
+    "error": 0,
+    "error_str": [],
+    "exec_cmd": "generate",
+    "exec_duration": 0.0,
+    "hash": "26eb0db24aee87ce3fc1664ad6aac603",
+    "inputs": [
+        "input_0"
+    ],
+    "layers": [
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 0,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 76800,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        120,
+                        160,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 0,
+            "inputs": [],
+            "name": "input_0",
+            "original": null,
+            "type": "Input"
+        },
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 0,
+                "n_params": 0,
+                "psize": 0,
+                "rom_size": 0
+            },
+            "id": 0,
+            "inputs": [
+                "input_0"
+            ],
+            "name": "flatten",
+            "original": "Flatten",
+            "type": "Reshape"
+        },
+        {
+            "c_id": [
+                0,
+                1
+            ],
+            "extras": {
+                "n_macc": 2457728,
+                "n_params": 2457728,
+                "psize": 9830912,
+                "rom_output": {
+                    "c_size": 512,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        128,
+                        1
+                    ]
+                },
+                "rom_size": 1229376
+            },
+            "id": 1,
+            "inputs": [
+                "flatten"
+            ],
+            "name": "dense_dense",
+            "original": "Dense",
+            "type": "Dense"
+        },
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 128,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 512,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        128,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 1,
+            "inputs": [
+                "dense_dense"
+            ],
+            "name": "dense",
+            "original": "Dense",
+            "type": "Nonlinearity"
+        },
+        {
+            "c_id": [
+                2,
+                3
+            ],
+            "extras": {
+                "n_macc": 8256,
+                "n_params": 8256,
+                "psize": 33024,
+                "rom_output": {
+                    "c_size": 256,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        64,
+                        1
+                    ]
+                },
+                "rom_size": 33024
+            },
+            "id": 2,
+            "inputs": [
+                "dense"
+            ],
+            "name": "dense_1_dense",
+            "original": "Dense",
+            "type": "Dense"
+        },
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 64,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 256,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        64,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 2,
+            "inputs": [
+                "dense_1_dense"
+            ],
+            "name": "dense_1",
+            "original": "Dense",
+            "type": "Nonlinearity"
+        },
+        {
+            "c_id": [
+                4,
+                5
+            ],
+            "extras": {
+                "n_macc": 2080,
+                "n_params": 2080,
+                "psize": 8320,
+                "rom_output": {
+                    "c_size": 128,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        32,
+                        1
+                    ]
+                },
+                "rom_size": 8320
+            },
+            "id": 3,
+            "inputs": [
+                "dense_1"
+            ],
+            "name": "dense_2_dense",
+            "original": "Dense",
+            "type": "Dense"
+        },
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 32,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 128,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        32,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 3,
+            "inputs": [
+                "dense_2_dense"
+            ],
+            "name": "dense_2",
+            "original": "Dense",
+            "type": "Nonlinearity"
+        },
+        {
+            "c_id": [
+                6,
+                7
+            ],
+            "extras": {
+                "n_macc": 528,
+                "n_params": 528,
+                "psize": 2112,
+                "rom_output": {
+                    "c_size": 64,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        16,
+                        1
+                    ]
+                },
+                "rom_size": 2112
+            },
+            "id": 4,
+            "inputs": [
+                "dense_2"
+            ],
+            "name": "dense_3_dense",
+            "original": "Dense",
+            "type": "Dense"
+        },
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 16,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 64,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        16,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 4,
+            "inputs": [
+                "dense_3_dense"
+            ],
+            "name": "dense_3",
+            "original": "Dense",
+            "type": "Nonlinearity"
+        },
+        {
+            "c_id": [
+                8,
+                9
+            ],
+            "extras": {
+                "n_macc": 136,
+                "n_params": 136,
+                "psize": 544,
+                "rom_output": {
+                    "c_size": 32,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        8,
+                        1
+                    ]
+                },
+                "rom_size": 544
+            },
+            "id": 5,
+            "inputs": [
+                "dense_3"
+            ],
+            "name": "dense_4_dense",
+            "original": "Dense",
+            "type": "Dense"
+        },
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 8,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 32,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        8,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 5,
+            "inputs": [
+                "dense_4_dense"
+            ],
+            "name": "dense_4",
+            "original": "Dense",
+            "type": "Nonlinearity"
+        },
+        {
+            "c_id": [
+                10,
+                11
+            ],
+            "extras": {
+                "n_macc": 36,
+                "n_params": 36,
+                "psize": 144,
+                "rom_output": {
+                    "c_size": 16,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        4,
+                        1
+                    ]
+                },
+                "rom_size": 144
+            },
+            "id": 6,
+            "inputs": [
+                "dense_4"
+            ],
+            "name": "dense_5_dense",
+            "original": "Dense",
+            "type": "Dense"
+        },
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 4,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 16,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        4,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 6,
+            "inputs": [
+                "dense_5_dense"
+            ],
+            "name": "dense_5",
+            "original": "Dense",
+            "type": "Nonlinearity"
+        },
+        {
+            "c_id": [
+                12,
+                13
+            ],
+            "extras": {
+                "n_macc": 10,
+                "n_params": 10,
+                "psize": 40,
+                "rom_output": {
+                    "c_size": 8,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        2,
+                        1
+                    ]
+                },
+                "rom_size": 40
+            },
+            "id": 7,
+            "inputs": [
+                "dense_5"
+            ],
+            "name": "dense_6_dense",
+            "original": "Dense",
+            "type": "Dense"
+        },
+        {
+            "c_id": [],
+            "extras": {
+                "n_macc": 30,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 8,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        2,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 7,
+            "inputs": [
+                "dense_6_dense"
+            ],
+            "name": "dense_6",
+            "original": "Dense",
+            "type": "Nonlinearity"
+        }
+    ],
+    "model_files": [
+        "E:\\STMF4_HAR\\yolo_motor(hui du new).h5"
+    ],
+    "model_n_params": 2468774,
+    "model_name": "yolo_motorhui_du_new",
+    "model_size": 9875096,
+    "model_type": "keras",
+    "name": "model_yolo_1",
+    "outputs": [
+        "dense_6"
+    ],
+    "ram_io_size": [
+        76800,
+        8
+    ],
+    "ram_size": [
+        77312,
+        77312
+    ],
+    "report_version": 1.1,
+    "rom_cfact": 1.0,
+    "rom_heap_inspector": 2048,
+    "rom_inputs": [
+        {
+            "c_size": 76800,
+            "c_type": "float",
+            "name": "input_0"
+        }
+    ],
+    "rom_n_macc": 2469056,
+    "rom_outputs": [
+        {
+            "c_size": 8,
+            "c_type": "float",
+            "name": "dense_6"
+        }
+    ],
+    "rom_size": 1273560,
+    "strategy": "heap_overlay",
+    "tools_api_version": {
+        "major": 1,
+        "micro": 0,
+        "minor": 7
+    },
+    "tools_version": {
+        "extra": "19520",
+        "major": 8,
+        "micro": 0,
+        "minor": 1
+    },
+    "val_error": -1.0,
+    "val_error_desc": "None (None) #-1",
+    "val_metrics": []
+}

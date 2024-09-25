@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <example.h>
+void DCMI_IRQHandler(void)
+{
+  /* USER CODE BEGIN DCMI_IRQn 0 */
+    __HAL_DCMI_CLEAR_FLAG(&hdcmi, DCMI_FLAG_FRAMERI);//清除帧中断
+    jpeg_data_process();//jpeg数据处理
+  /* USER CODE END DCMI_IRQn 0 */
+  HAL_DCMI_IRQHandler(&hdcmi);
+  /* USER CODE BEGIN DCMI_IRQn 1 */
+
+  /* USER CODE END DCMI_IRQn 1 */
+}

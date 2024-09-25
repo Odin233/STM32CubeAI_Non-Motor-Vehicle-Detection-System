@@ -1,0 +1,225 @@
+Neural Network Tools for STM32 family v1.7.0 (stm.ai v8.1.0-19520)
+Created date          : 2023-10-26 22:31:08
+Parameters            : generate --name model_yolo_1 -m E:/STMF4_HAR/yolo_motor.h5 --type keras --compression medium --verbosity 1 --workspace C:\Users\11270\AppData\Local\Temp\mxAI_workspace10303910209948002141597162960199223 --output C:\Users\11270\.stm32cubemx\network_output --allocate-inputs --series stm32f4 --allocate-outputs
+
+Exec/report summary (generate)
+-------------------------------------------------------------------------------------------------------------
+model file         :   E:\STMF4_HAR\yolo_motor.h5                                                            
+type               :   keras                                                                                 
+c_name             :   model_yolo_1                                                                          
+compression        :   medium                                                                                
+options            :   allocate-inputs, allocate-outputs                                                     
+optimization       :   balanced                                                                              
+target/series      :   stm32f4                                                                               
+workspace dir      :   C:\Users\11270\AppData\Local\Temp\mxAI_workspace10303910209948002141597162960199223   
+output dir         :   C:\Users\11270\.stm32cubemx\network_output                                            
+model_fmt          :   float                                                                                 
+model_name         :   yolo_motor                                                                            
+model_hash         :   baea3c7f05134982e8621d9b34d9f953                                                      
+params #           :   2,108,326 items (8.04 MiB)                                                            
+-------------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_0' (domain:activations/**default**)                                            
+                   :   16384 items, 64.00 KiB, ai_float, float, (1,128,128)                                  
+output 1/1         :   'dense_6' (domain:activations/**default**)                                            
+                   :   2 items, 8 B, ai_float, float, (1,2)                                                  
+macc               :   2,108,608                                                                             
+weights (ro)       :   1,093,336 B (1067.71 KiB) (1 segment) / -7,339,968(-87.0%) vs float model             
+activations (rw)   :   66,048 B (64.50 KiB) (1 segment) *                                                    
+ram (total)        :   66,048 B (64.50 KiB) = 66,048 + 0 + 0                                                 
+-------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers can be used from the activations buffer
+
+Model name - yolo_motor ['input_0'] ['dense_6']
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+m_id   layer (type,original)           oshape                       param/size                   macc    connected to   | c_size               c_macc          c_type                          
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+0      input_0 (Input, None)           [b:None,h:128,h:128,c:128]                                                       |                                      
+       flatten (Reshape, Flatten)      [b:None,c:16384]                                                       input_0   |                                      
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+1      dense_dense (Dense, Dense)      [b:None,c:128]               2,097,280/8,389,120     2,097,280         flatten   | -7,339,968(-87.5%)   +128(+0.0%)     dense_wc4of32/nl_of32[0, 1]     
+       dense (Nonlinearity, Dense)     [b:None,c:128]                                             128     dense_dense   |                      -128(-100.0%)   
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+2      dense_1_dense (Dense, Dense)    [b:None,c:64]                8,256/33,024                8,256           dense   |                      +64(+0.8%)      dense_of32/nl_of32[2, 3]        
+       dense_1 (Nonlinearity, Dense)   [b:None,c:64]                                               64   dense_1_dense   |                      -64(-100.0%)    
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+3      dense_2_dense (Dense, Dense)    [b:None,c:32]                2,080/8,320                 2,080         dense_1   |                      +32(+1.5%)      dense_of32/nl_of32[4, 5]        
+       dense_2 (Nonlinearity, Dense)   [b:None,c:32]                                               32   dense_2_dense   |                      -32(-100.0%)    
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+4      dense_3_dense (Dense, Dense)    [b:None,c:16]                528/2,112                     528         dense_2   |                      +16(+3.0%)      dense_of32/nl_of32[6, 7]        
+       dense_3 (Nonlinearity, Dense)   [b:None,c:16]                                               16   dense_3_dense   |                      -16(-100.0%)    
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+5      dense_4_dense (Dense, Dense)    [b:None,c:8]                 136/544                       136         dense_3   |                      +8(+5.9%)       dense_of32/nl_of32[8, 9]        
+       dense_4 (Nonlinearity, Dense)   [b:None,c:8]                                                 8   dense_4_dense   |                      -8(-100.0%)     
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+6      dense_5_dense (Dense, Dense)    [b:None,c:4]                 36/144                         36         dense_4   |                      +4(+11.1%)      dense_of32/nl_of32[10, 11]      
+       dense_5 (Nonlinearity, Dense)   [b:None,c:4]                                                 4   dense_5_dense   |                      -4(-100.0%)     
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+7      dense_6_dense (Dense, Dense)    [b:None,c:2]                 10/40                          10         dense_5   |                      +30(+300.0%)    dense_of32/nl_of32[o][12, 13]   
+       dense_6 (Nonlinearity, Dense)   [b:None,c:2]                                                30   dense_6_dense   |                      -30(-100.0%)    
+------ ------------------------------- ---------------------------- --------------------- ----------- --------------- --- -------------------- --------------- ------------------------------- 
+model/c-model: macc=2,108,608/2,108,608  weights=8,433,304/1,093,336 -7,339,968(-87.0%) activations=--/66,048 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : yolo_motor
+c-name                : model_yolo_1
+c-node #              : 14
+c-array #             : 29
+activations size      : 66048 (1 segment)
+weights size          : 1093336 (1 segment)
+macc                  : 2108608
+inputs                : ['input_0_output']
+outputs               : ['dense_6_output']
+
+C-Arrays (29)
+------ ----------------------- ----------------- ------------------------- ------------- ----------- --------- 
+c_id   name (*_array)          item/size         domain/mem-pool           c-type        fmt         comment   
+------ ----------------------- ----------------- ------------------------- ------------- ----------- --------- 
+0      dense_6_output          2/8               activations/**default**   float         float32     /output   
+1      dense_dense_weights     2097152/1048640   weights/weights           const float   c4 (LUT4)             
+2      dense_dense_bias        128/512           weights/weights           const float   float32               
+3      dense_1_dense_weights   8192/32768        weights/weights           const float   float32               
+4      dense_1_dense_bias      64/256            weights/weights           const float   float32               
+5      dense_2_dense_weights   2048/8192         weights/weights           const float   float32               
+6      dense_2_dense_bias      32/128            weights/weights           const float   float32               
+7      dense_3_dense_weights   512/2048          weights/weights           const float   float32               
+8      dense_3_dense_bias      16/64             weights/weights           const float   float32               
+9      dense_4_dense_weights   128/512           weights/weights           const float   float32               
+10     dense_4_dense_bias      8/32              weights/weights           const float   float32               
+11     dense_5_dense_weights   32/128            weights/weights           const float   float32               
+12     dense_5_dense_bias      4/16              weights/weights           const float   float32               
+13     dense_6_dense_weights   8/32              weights/weights           const float   float32               
+14     dense_6_dense_bias      2/8               weights/weights           const float   float32               
+15     input_0_output          16384/65536       activations/**default**   float         float32     /input    
+16     dense_dense_output      128/512           activations/**default**   float         float32               
+17     dense_output            128/512           activations/**default**   float         float32               
+18     dense_1_dense_output    64/256            activations/**default**   float         float32               
+19     dense_1_output          64/256            activations/**default**   float         float32               
+20     dense_2_dense_output    32/128            activations/**default**   float         float32               
+21     dense_2_output          32/128            activations/**default**   float         float32               
+22     dense_3_dense_output    16/64             activations/**default**   float         float32               
+23     dense_3_output          16/64             activations/**default**   float         float32               
+24     dense_4_dense_output    8/32              activations/**default**   float         float32               
+25     dense_4_output          8/32              activations/**default**   float         float32               
+26     dense_5_dense_output    4/16              activations/**default**   float         float32               
+27     dense_5_output          4/16              activations/**default**   float         float32               
+28     dense_6_dense_output    2/8               activations/**default**   float         float32               
+------ ----------------------- ----------------- ------------------------- ------------- ----------- --------- 
+
+C-Layers (14)
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+c_id   name (*_layer)   id   layer_type   macc      rom       tensors                    shape (array id)   
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+0      dense_dense      1    dense        2097280   1049152   I: input_0_output0         (1,16384) (15)     
+                                                              W: dense_dense_weights     (16384,128) (1)    
+                                                              W: dense_dense_bias        (128,) (2)         
+                                                              O: dense_dense_output      (1,128) (16)       
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+1      dense            1    nl           128       0         I: dense_dense_output      (1,128) (16)       
+                                                              O: dense_output            (1,128) (17)       
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+2      dense_1_dense    2    dense        8256      33024     I: dense_output            (1,128) (17)       
+                                                              W: dense_1_dense_weights   (128,64) (3)       
+                                                              W: dense_1_dense_bias      (64,) (4)          
+                                                              O: dense_1_dense_output    (1,64) (18)        
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+3      dense_1          2    nl           64        0         I: dense_1_dense_output    (1,64) (18)        
+                                                              O: dense_1_output          (1,64) (19)        
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+4      dense_2_dense    3    dense        2080      8320      I: dense_1_output          (1,64) (19)        
+                                                              W: dense_2_dense_weights   (64,32) (5)        
+                                                              W: dense_2_dense_bias      (32,) (6)          
+                                                              O: dense_2_dense_output    (1,32) (20)        
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+5      dense_2          3    nl           32        0         I: dense_2_dense_output    (1,32) (20)        
+                                                              O: dense_2_output          (1,32) (21)        
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+6      dense_3_dense    4    dense        528       2112      I: dense_2_output          (1,32) (21)        
+                                                              W: dense_3_dense_weights   (32,16) (7)        
+                                                              W: dense_3_dense_bias      (16,) (8)          
+                                                              O: dense_3_dense_output    (1,16) (22)        
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+7      dense_3          4    nl           16        0         I: dense_3_dense_output    (1,16) (22)        
+                                                              O: dense_3_output          (1,16) (23)        
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+8      dense_4_dense    5    dense        136       544       I: dense_3_output          (1,16) (23)        
+                                                              W: dense_4_dense_weights   (16,8) (9)         
+                                                              W: dense_4_dense_bias      (8,) (10)          
+                                                              O: dense_4_dense_output    (1,8) (24)         
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+9      dense_4          5    nl           8         0         I: dense_4_dense_output    (1,8) (24)         
+                                                              O: dense_4_output          (1,8) (25)         
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+10     dense_5_dense    6    dense        36        144       I: dense_4_output          (1,8) (25)         
+                                                              W: dense_5_dense_weights   (8,4) (11)         
+                                                              W: dense_5_dense_bias      (4,) (12)          
+                                                              O: dense_5_dense_output    (1,4) (26)         
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+11     dense_5          6    nl           4         0         I: dense_5_dense_output    (1,4) (26)         
+                                                              O: dense_5_output          (1,4) (27)         
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+12     dense_6_dense    7    dense        10        40        I: dense_5_output          (1,4) (27)         
+                                                              W: dense_6_dense_weights   (4,2) (13)         
+                                                              W: dense_6_dense_bias      (2,) (14)          
+                                                              O: dense_6_dense_output    (1,2) (28)         
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+13     dense_6          7    nl           30        0         I: dense_6_dense_output    (1,2) (28)         
+                                                              O: dense_6_output          (1,2) (0)          
+------ ---------------- ---- ------------ --------- --------- -------------------------- ------------------ 
+
+
+
+Number of operations per c-layer
+------- ------ ----------------------- ----------- ---------------- ----------- ---------- 
+c_id    m_id   name (type)                     #op             type      #param   sparsity 
+------- ------ ----------------------- ----------- ---------------- ----------- ---------- 
+0       1      dense_dense (dense)       2,097,280   smul_f32_f32c4   2,097,280     0.0000 
+1       1      dense (nl)                      128       op_f32_f32             
+2       2      dense_1_dense (dense)         8,256     smul_f32_f32       8,256     0.0006 
+3       2      dense_1 (nl)                     64       op_f32_f32             
+4       3      dense_2_dense (dense)         2,080     smul_f32_f32       2,080     0.0010 
+5       3      dense_2 (nl)                     32       op_f32_f32             
+6       4      dense_3_dense (dense)           528     smul_f32_f32         528     0.0000 
+7       4      dense_3 (nl)                     16       op_f32_f32             
+8       5      dense_4_dense (dense)           136     smul_f32_f32         136     0.0000 
+9       5      dense_4 (nl)                      8       op_f32_f32             
+10      6      dense_5_dense (dense)            36     smul_f32_f32          36     0.0000 
+11      6      dense_5 (nl)                      4       op_f32_f32             
+12      7      dense_6_dense (dense)            10     smul_f32_f32          10     0.0000 
+13      7      dense_6 (nl)                     30       op_f32_f32             
+------- ------ ----------------------- ----------- ---------------- ----------- ---------- 
+total                                    2,108,608                    2,108,326     0.0000 
+
+Number of operation types
+---------------- ----------- ----------- 
+operation type             #           % 
+---------------- ----------- ----------- 
+smul_f32_f32c4     2,097,280       99.5% 
+op_f32_f32               282        0.0% 
+smul_f32_f32          11,046        0.5% 
+
+Complexity report (model)
+------ --------------- ------------------------- ------------------------- ---------- 
+m_id   name            c_macc                    c_rom                     c_id       
+------ --------------- ------------------------- ------------------------- ---------- 
+1      dense_dense     ||||||||||||||||  99.5%   ||||||||||||||||  96.0%   [0, 1]     
+2      dense_1_dense   |                  0.4%   |                  3.0%   [2, 3]     
+3      dense_2_dense   |                  0.1%   |                  0.8%   [4, 5]     
+4      dense_3_dense   |                  0.0%   |                  0.2%   [6, 7]     
+5      dense_4_dense   |                  0.0%   |                  0.0%   [8, 9]     
+6      dense_5_dense   |                  0.0%   |                  0.0%   [10, 11]   
+7      dense_6_dense   |                  0.0%   |                  0.0%   [12, 13]   
+------ --------------- ------------------------- ------------------------- ---------- 
+macc=2,108,608 weights=1,093,336 act=66,048 ram_io=0
+
+Generated files (7)
+----------------------------------------------------------------------- 
+C:\Users\11270\.stm32cubemx\network_output\model_yolo_1_config.h        
+C:\Users\11270\.stm32cubemx\network_output\model_yolo_1.h               
+C:\Users\11270\.stm32cubemx\network_output\model_yolo_1.c               
+C:\Users\11270\.stm32cubemx\network_output\model_yolo_1_data_params.h   
+C:\Users\11270\.stm32cubemx\network_output\model_yolo_1_data_params.c   
+C:\Users\11270\.stm32cubemx\network_output\model_yolo_1_data.h          
+C:\Users\11270\.stm32cubemx\network_output\model_yolo_1_data.c          
