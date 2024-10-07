@@ -44,28 +44,28 @@
 
 设置DCMI：
 
-![65a3fd44fc33bb80424dc74005bc2b5f.png](../_resources/65a3fd44fc33bb80424dc74005bc2b5f.png)
+![65a3fd44fc33bb80424dc74005bc2b5f.png](/_resources/65a3fd44fc33bb80424dc74005bc2b5f.png)
 
 - 不同的mode代表不同的数据格式。8bits Embedded Synchro是指码流中嵌入同步码元的编码形式，其他的External Synchro都是通过单独的硬线提供同步信号。8、10、12、14是指数据位宽，像OV7725是8位宽数据+硬线同步，所以应该选择Slave 8 bits External Synchro。
 
 GPIO Settings：
 
-![08df91a994e81c404176ba9f21842e78.png](../_resources/08df91a994e81c404176ba9f21842e78.png)
+![08df91a994e81c404176ba9f21842e78.png](/_resources/08df91a994e81c404176ba9f21842e78.png)
 
-![ec44c85507deffdb148ac9b5b5bf6208.png](../_resources/ec44c85507deffdb148ac9b5b5bf6208.png)
+![ec44c85507deffdb148ac9b5b5bf6208.png](/_resources/ec44c85507deffdb148ac9b5b5bf6208.png)
 
 Parameter Setting：
 
-![c235cbb0f5b9476888993676f7ddd98d.png](../_resources/c235cbb0f5b9476888993676f7ddd98d.png)
+![c235cbb0f5b9476888993676f7ddd98d.png](/_resources/c235cbb0f5b9476888993676f7ddd98d.png)
 
 - 前3个参数是和所接摄像头参数对应的，要保持一致，分别是指PCLK触发沿选择、垂直同步信号VSYNC极性、水平同步信号HREF极性，注意OV7725提供的水平同步信号是HREF而不是HSYNC。
 从下图OV7725时序图可以看出，PCLK上升沿有效，所以选Active on Rising edge。
 
-![2e18869608f5fa5d11be28b57b296e49.png](../_resources/2e18869608f5fa5d11be28b57b296e49.png)
+![2e18869608f5fa5d11be28b57b296e49.png](/_resources/2e18869608f5fa5d11be28b57b296e49.png)
 
 - 但是，从下图帧时序图中看到，当VSYNC低电平，且HREF、HSYNC高电平时，才传输有效数据，DCMI配置选项中的Active High是指高电平时进行同步，官方称为消隐信号，也就是低电平时进行传数。这个一定要选对，不然接收到的数据永远都是0x00。对应OV7725的正确选择应该是：V=Active high，H=Active low。
 
-![5097c2cd5b59d654aaefc11ad3aefcc8.png](../_resources/5097c2cd5b59d654aaefc11ad3aefcc8.png)
+![5097c2cd5b59d654aaefc11ad3aefcc8.png](/_resources/5097c2cd5b59d654aaefc11ad3aefcc8.png)
 
 - 接下来是“Frequency of frame capture”，这个是指DCMI接收处理的帧频率，通俗点就是说摄像头在一直发送图像数据，可能帧频率是60fps，但我们实际不需要这么高的帧率，可以通过这个选项选择“每处理1帧，丢弃3帧”、“每处理1帧，丢弃1帧”、“全部处理”。根据实际需要选择。
 - 最后一个JPEG mode是指接收的数据流传输的是否为JPEG压缩数据。OV7725输出的VGA、QVGA、CIF格式都是非压缩数据，所以这里要选Disabled。
@@ -77,9 +77,9 @@ Data Width的选择应与实际一致，我们要将OV7725通过DCMI传入的外
 
 - 此处我们的图像编码格式是RGB565，按照上述说明，DCMI输出的32位数据应该是下图这种排列方式，当LTDC读取时也是这样的格式，通过实现发现是可以直接解码的，不需要进行位变换，但这部分内部原理还需要摸清楚，这里暂时不展开。
 
-![ac51533877cef4f9fd89ba05eec23532.png](../_resources/ac51533877cef4f9fd89ba05eec23532.png)
+![ac51533877cef4f9fd89ba05eec23532.png](/_resources/ac51533877cef4f9fd89ba05eec23532.png)
 
-![5aafd5f75f643dfe89c2af18f9cb9f0b.png](../_resources/5aafd5f75f643dfe89c2af18f9cb9f0b.png)
+![5aafd5f75f643dfe89c2af18f9cb9f0b.png](/_resources/5aafd5f75f643dfe89c2af18f9cb9f0b.png)
 
 #### 相关HAL库函数
 
@@ -94,7 +94,7 @@ void HAL_DCMI_VsyncEventCallback(DCMI_HandleTypeDef *hdcmi)
 
 #### OV7725引脚定义
 
-![0758c2b96f808f6d345b36ad9a73f321.png](../_resources/0758c2b96f808f6d345b36ad9a73f321.png)
+![0758c2b96f808f6d345b36ad9a73f321.png](/_resources/0758c2b96f808f6d345b36ad9a73f321.png)
 
 - 但是他的参数设置可是多的一批，一共有0x00-0xac个8位寄存器，要想获得优秀画质，就得摸透这些寄存器。下面是官方给出的有用的寄存器配置方案，具体应用时可适当调整：
 【注意】：硬件I2C有一些bug，不太好用，总是busy状态，推荐使用软件I2C进行配置通信。
@@ -197,21 +197,21 @@ STM32的LTDC使用非常简单，完成参数配置后，只要定时向图层�
 
 - LTDC主要的接口IO有像素时钟LCD_CLK、水平同步HSYNC、垂直同步VSYNC、数据有效DE和3组RGB数据信号并行线，STM32F429最大支持RGB888显示输出，Display Type选项要根据所使用的显示屏支持的数据格式进行选择。
 
-![56b42b5f8c35b97223d1c58de9ddf762.png](../_resources/56b42b5f8c35b97223d1c58de9ddf762.png)
+![56b42b5f8c35b97223d1c58de9ddf762.png](/_resources/56b42b5f8c35b97223d1c58de9ddf762.png)
 
 - configuration中的parameter settings是最核心的配置，其中下图红框中的参数是由所使用的显示屏决定的，通常显示屏datasheet中都会给出，比如我使用的TM043NDH02给出的配置参数见第二张图，只要一一对应匹配即可。
 
-![0ed8c648e65bb52d9d73843ca0579bdb.png](../_resources/0ed8c648e65bb52d9d73843ca0579bdb.png)
+![0ed8c648e65bb52d9d73843ca0579bdb.png](/_resources/0ed8c648e65bb52d9d73843ca0579bdb.png)
 
-![bd092ae91a049cf1b460dc1799d039ed.png](../_resources/bd092ae91a049cf1b460dc1799d039ed.png)
+![bd092ae91a049cf1b460dc1799d039ed.png](/_resources/bd092ae91a049cf1b460dc1799d039ed.png)
 
 - signal polarity有效电平配置。这部分有效电平的设置一定要和使用的显示屏相符合，下图为我是用的显示屏datasheet对IO电平的要求。
 
-![db3d98169e77a25c75173c933b75f20d.png](../_resources/db3d98169e77a25c75173c933b75f20d.png)
+![db3d98169e77a25c75173c933b75f20d.png](/_resources/db3d98169e77a25c75173c933b75f20d.png)
 
 - layer settings主要是对图层参数进行设置。STM32F429共提供两个图层，每个图层的配置基本相似，下面是单个图层的配置说明。
 
-![47d8bb81d1df859e76df25cf128ca01e.png](../_resources/47d8bb81d1df859e76df25cf128ca01e.png)
+![47d8bb81d1df859e76df25cf128ca01e.png](/_resources/47d8bb81d1df859e76df25cf128ca01e.png)
 
 - 完成以上配置后，LTDC就可以工作了。当我们需要把OV7725采集的图像进行显示时，只要在DCMI的帧中断或垂直同步中断中，把帧图像缓存地址向LTDC的图层句柄的起始地址赋值，然后调用一次配置函数即可，这样每接收完一帧图像，即触发一次显示刷新。
 
@@ -281,7 +281,7 @@ Cube-AI把模型转化为一堆数组，而后将这些数组内容解析成模�
 
 这里使用官方提供的模型进行测试，用`keras`框架训练：
 
-<img width="962" height="414" src="../_resources/bd5c115726b3c876615807998d03feba_c7de17b88f9c4ab1b.png"/>
+<img width="962" height="414" src="/_resources/bd5c115726b3c876615807998d03feba_c7de17b88f9c4ab1b.png"/>
 
 ```
 https://github.com/Shahnawax/HAR-CNN-Keras
@@ -295,7 +295,7 @@ https://github.com/Shahnawax/HAR-CNN-Keras
 
 这个模型是根据人一段时间内的3D加速度数据，来判断人当前的行为，比如走路，跑步，上楼，下楼等，很符合Cortex-M系列MCU的应用场景。使用的数据如下图所示。
 
-![8a510ae6ae14273e3b5d654885049278.png](../_resources/8a510ae6ae14273e3b5d654885049278_74bd12ecc2484b5c8.png)
+![8a510ae6ae14273e3b5d654885049278.png](/_resources/8a510ae6ae14273e3b5d654885049278_74bd12ecc2484b5c8.png)
 
 HAR用到的原始数据
 
@@ -328,35 +328,35 @@ HAR用到的原始数据
 
 CUBEMX提供了一个压缩率的选项，可以选择合适的压缩率，实际是压缩神经网络模型的权重系数，使得网络模型可以在单片机上运行，压缩率为8，使得模型缩小到366KB，验证可以通过；
 
-<img width="962" height="543" src="../_resources/741a3c340fb9ae55dd5e384581022d31_87375159f2214edeb.png"/>
+<img width="962" height="543" src="/_resources/741a3c340fb9ae55dd5e384581022d31_87375159f2214edeb.png"/>
 
 然后按照下面的步骤安装好CUBE.AI的扩展包
 
-![b0193f52dba2c956a53b8039f241adcd.png](../_resources/b0193f52dba2c956a53b8039f241adcd_f0058d52c8404e098.png)
+![b0193f52dba2c956a53b8039f241adcd.png](/_resources/b0193f52dba2c956a53b8039f241adcd_f0058d52c8404e098.png)
 
 这个我安装了三个，安装最新版本的一个版本就可以。
 
-![23b8d856c72fd0ed423b34a231212c39.png](../_resources/23b8d856c72fd0ed423b34a231212c39_6757f1b4ea9d4ea2b.png)
+![23b8d856c72fd0ed423b34a231212c39.png](/_resources/23b8d856c72fd0ed423b34a231212c39_6757f1b4ea9d4ea2b.png)
 
 接下来就是熟悉得新建工程了
 
-<img width="962" height="431" src="../_resources/68dd987ce3fce5eb3ea132d678f54b0e_30788c09add94a9ab.png"/>
+<img width="962" height="431" src="/_resources/68dd987ce3fce5eb3ea132d678f54b0e_30788c09add94a9ab.png"/>
 
 因为安装了AI的包，所以在这个界面会出现`artificial intelligence`这个选项，点击`Enable`可以查看哪一些芯片支持`AI`
 
-<img width="962" height="588" src="../_resources/c4fc61300f470d18d535a155a9274a24_953dc037200c4ffdb.png"/>
+<img width="962" height="588" src="/_resources/c4fc61300f470d18d535a155a9274a24_953dc037200c4ffdb.png"/>
 
 接下来就是配置下载接口和外部晶振了。
 
-<img width="962" height="507" src="../_resources/9bba3a1f731cd5cbf0b9bec5c6783692_f10b3180e2ba4cb1a.png"/><img width="962" height="641" src="../_resources/41bcef1e606d090ed6296f75c68c77ac_2d0c91cb59b54a39a.png"/>
+<img width="962" height="507" src="/_resources/9bba3a1f731cd5cbf0b9bec5c6783692_f10b3180e2ba4cb1a.png"/><img width="962" height="641" src="/_resources/41bcef1e606d090ed6296f75c68c77ac_2d0c91cb59b54a39a.png"/>
 
 然后记得要选择一个串口作为调试信息打印输出。
 
-<img width="962" height="660" src="../_resources/6f459bd1c34e35a0a676436634332b93_a770c2028afd49f2a.png"/>
+<img width="962" height="660" src="/_resources/6f459bd1c34e35a0a676436634332b93_a770c2028afd49f2a.png"/>
 
 选择`Software Packs`，进入后把`AI`相关的两个包点开，第一个**打上勾**，第一个选择`Validation`。
 
-<img width="962" height="236" src="../_resources/e7e1f4f574e5c684009757c0f364c749_1e472de835ce47cbb.png"/><img width="962" height="435" src="../_resources/5675a1671f06d1fbf78b961844425a76_b8f01b52ee3a4689b.png"/>
+<img width="962" height="236" src="/_resources/e7e1f4f574e5c684009757c0f364c749_1e472de835ce47cbb.png"/><img width="962" height="435" src="/_resources/5675a1671f06d1fbf78b961844425a76_b8f01b52ee3a4689b.png"/>
 
 - System Performance工程：整个应用程序项目运行在STM32MCU上，可以准确测量NN推理结果，CP∪U负载和内存使用情况。使用串行终端监控结果（e.g.Tera Term）
     
@@ -367,23 +367,23 @@ CUBEMX提供了一个压缩率的选项，可以选择合适的压缩率，实�
 
 之后左边栏中的`Software Packs`点开，选择其中的`X-CUBE-AI`，弹出的`Mode`窗口中两个复选框都打勾，`Configuration`窗口中，点开`network`选项卡。
 
-<img width="962" height="641" src="../_resources/8e77aec52665650450313524e68c4ae0_902bb84c95854630a.png"/>
+<img width="962" height="641" src="/_resources/8e77aec52665650450313524e68c4ae0_902bb84c95854630a.png"/>
 
 选择刚刚配置的串口作为调试用。
 
-<img width="962" height="586" src="../_resources/ec06f79c9f23a1f0be2aa41c294f3c1b_79c6bde424c44a43a.png"/>
+<img width="962" height="586" src="/_resources/ec06f79c9f23a1f0be2aa41c294f3c1b_79c6bde424c44a43a.png"/>
 
 点击`add network`,选择上述下载好的`model`点h5模型，选择压缩倍数8；
 
-<img width="962" height="734" src="../_resources/c74642a2f73eee4cefefd3fd10b0aa3b_55fe22e0194646b6a.png"/>
+<img width="962" height="734" src="/_resources/c74642a2f73eee4cefefd3fd10b0aa3b_55fe22e0194646b6a.png"/>
 
 点击分析，可从中看到模型压缩前后的参数对比
 
-<img width="962" height="532" src="../_resources/d48e4a175385ecd2f8b749a15e9cf3a5_ad7dffd00bef4693b.png"/>
+<img width="962" height="532" src="/_resources/d48e4a175385ecd2f8b749a15e9cf3a5_ad7dffd00bef4693b.png"/>
 
 点击validation on desktop 在PC上进行模型验证，包括原模型与转换后模型的对比，下方也会现在验证的结果。
 
-<img width="962" height="520" src="../_resources/c4445a1160eff5baeb72d4d9693bde5f_d4c361dac99d4988a.png"/>
+<img width="962" height="520" src="/_resources/c4445a1160eff5baeb72d4d9693bde5f_d4c361dac99d4988a.png"/>
 
 致此，模型验证完成，下面开始模型部署
 
@@ -393,27 +393,27 @@ CUBEMX提供了一个压缩率的选项，可以选择合适的压缩率，实�
 
 时钟配置，系统会自动进行时钟配置。按照你单片机的实际选型配置时钟就可以了。
 
-<img width="962" height="457" src="../_resources/193c22386b185217bb09de3c21895c83_98d37614603b49a7b.png"/><img width="962" height="477" src="../_resources/dd043ace0fcaf9a91aef9a659f851290_b6ea35e0c4fa47419.png"/><img width="962" height="386" src="../_resources/cd4d67ba808544edbb4aacefaf5df5b8_9ba2d6e9512446dc8.png"/>
+<img width="962" height="457" src="/_resources/193c22386b185217bb09de3c21895c83_98d37614603b49a7b.png"/><img width="962" height="477" src="/_resources/dd043ace0fcaf9a91aef9a659f851290_b6ea35e0c4fa47419.png"/><img width="962" height="386" src="/_resources/cd4d67ba808544edbb4aacefaf5df5b8_9ba2d6e9512446dc8.png"/>
 
 最后点击`GENERATE CODE`生成工程。
 
-![271d53eceaee34253b60613e3e6712bb.png](../_resources/271d53eceaee34253b60613e3e6712bb_6bdafda3d4be46a7a.png)
+![271d53eceaee34253b60613e3e6712bb.png](/_resources/271d53eceaee34253b60613e3e6712bb_6bdafda3d4be46a7a.png)
 
 然后在MDK中编译链接。
 
-![019c17b86dc8c60e5d8485da83aa44b7.png](../_resources/019c17b86dc8c60e5d8485da83aa44b7_3f148c86ed1c418b8.png)
+![019c17b86dc8c60e5d8485da83aa44b7.png](/_resources/019c17b86dc8c60e5d8485da83aa44b7_3f148c86ed1c418b8.png)
 
 选择好下载器后就可以下载代码了。
 
-![bf02598d4466c3b93cfe3837a2b3a85f.png](../_resources/bf02598d4466c3b93cfe3837a2b3a85f_48bd781a34094f648.png)![27d1d89601259bb1b03c94b8e0a46f0b.png](../_resources/27d1d89601259bb1b03c94b8e0a46f0b_2ecbc1c2c1474c79b.png)
+![bf02598d4466c3b93cfe3837a2b3a85f.png](/_resources/bf02598d4466c3b93cfe3837a2b3a85f_48bd781a34094f648.png)![27d1d89601259bb1b03c94b8e0a46f0b.png](/_resources/27d1d89601259bb1b03c94b8e0a46f0b_2ecbc1c2c1474c79b.png)
 
 然后打开串口调试助手，按下STM32板子的RESET，就可以看到一系列的打印信息了。
 
-![b3e52c5aafef308ff9a1fa73a8c9ff89.png](../_resources/b3e52c5aafef308ff9a1fa73a8c9ff89_b708b000b1c8457ea.png)
+![b3e52c5aafef308ff9a1fa73a8c9ff89.png](/_resources/b3e52c5aafef308ff9a1fa73a8c9ff89_b708b000b1c8457ea.png)
 
 代码烧写在芯片里后，回到CubeMX中下图所示位置，我们点击`Validate on target`，在板上运行验证程序，效果如下图，可以工作，证明模型成功部署在MCU中。
 
-![5b8dfbb42b121c4493e27a241c400ae9.png](../_resources/5b8dfbb42b121c4493e27a241c400ae9_2d45b26d0b754796b.png)<img width="962" height="476" src="../_resources/815a40d902cb6eff06bf61f3111dc698_cb322e810f7941c5b.png"/>
+![5b8dfbb42b121c4493e27a241c400ae9.png](/_resources/5b8dfbb42b121c4493e27a241c400ae9_2d45b26d0b754796b.png)<img width="962" height="476" src="/_resources/815a40d902cb6eff06bf61f3111dc698_cb322e810f7941c5b.png"/>
 
 ### STM32CubeMX、STM32CubeIDE进行X-Cube-AI相关环境搭建问题
 
@@ -614,9 +614,9 @@ uint8_t ReadBuffer[50];
 
 OV7725引脚：
 
-![205b39c910235ec4c2e683436af1efe8.png](../_resources/205b39c910235ec4c2e683436af1efe8.png)
+![205b39c910235ec4c2e683436af1efe8.png](/_resources/205b39c910235ec4c2e683436af1efe8.png)
 
-![9f83987b78cb642c6ddd70868cdc4f41.png](../_resources/9f83987b78cb642c6ddd70868cdc4f41.png)
+![9f83987b78cb642c6ddd70868cdc4f41.png](/_resources/9f83987b78cb642c6ddd70868cdc4f41.png)
 
 - PCLK是像素时钟，也就是OV7725的获取像素并输出的时钟频率。
 - XCLK是外部时钟的输入引脚，可接外部晶振。
@@ -626,7 +626,7 @@ OV7725引脚：
 
 FIFO引脚（名称中的`/`代表低电平有效）：
 
-![6a9af220f7b6e6c73c344979984e1e6d.png](../_resources/6a9af220f7b6e6c73c344979984e1e6d.png)
+![6a9af220f7b6e6c73c344979984e1e6d.png](/_resources/6a9af220f7b6e6c73c344979984e1e6d.png)
 
 - /WE引脚为低电平时才能对FIFO芯片进行写入操作。/WE为高电平时为无效数据。
 - /WRST引脚为低电平时才能使得每次对FIFO芯片的写入都从起始位的地址开始，这样可以使得摄像头工作时对FIFO缓存的写入是覆盖的，更符合摄像头工作的流程。
@@ -638,21 +638,21 @@ FIFO引脚（名称中的`/`代表低电平有效）：
 - OV7725的HREF引脚应该连接FIFO的/WE引脚，因为FIFO的写入周期长度应该和OV7725的HREF周期长度应当一致，在原理图中可以看到与WEN引脚一起与/WE引脚连接，因此引出WEN和HREF引脚，或仅引出WEN引脚（不需要HERF引脚，其默认为高电平）。WEN即为/WE引脚取反。因此当WEN和HREF引脚均为高电平时（通过与非门共同控制），代表/WE引脚为低电平。
 - SIO_C即为SCL引脚，SIO_D即为SDA引脚，构成SCCB总线。
 
-![62f0bf91de551b0cf46211eda9049024.png](../_resources/62f0bf91de551b0cf46211eda9049024.png)
+![62f0bf91de551b0cf46211eda9049024.png](/_resources/62f0bf91de551b0cf46211eda9049024.png)
 
-![9ec0629b96efa37d2eff0cf92eace6a0.png](../_resources/9ec0629b96efa37d2eff0cf92eace6a0.png)
+![9ec0629b96efa37d2eff0cf92eace6a0.png](/_resources/9ec0629b96efa37d2eff0cf92eace6a0.png)
 
 OV7725和AL422B原理图：
 
-![f9dbb93c1b14c1d9bfb6cb3590f2e29e.png](../_resources/f9dbb93c1b14c1d9bfb6cb3590f2e29e.png)
+![f9dbb93c1b14c1d9bfb6cb3590f2e29e.png](/_resources/f9dbb93c1b14c1d9bfb6cb3590f2e29e.png)
 
 带有AL422B-FIFO芯片的OV7725模块的引脚（包含了部分AL422B和部分OV7725的引脚）：
 
-![3da5a00901f74d118417f0c196a3a204.png](../_resources/3da5a00901f74d118417f0c196a3a204.png)
+![3da5a00901f74d118417f0c196a3a204.png](/_resources/3da5a00901f74d118417f0c196a3a204.png)
 
 参考接线：
 
-![ea9d3cffa8e2728733ff1c028a7ef401.png](../_resources/ea9d3cffa8e2728733ff1c028a7ef401.png)
+![ea9d3cffa8e2728733ff1c028a7ef401.png](/_resources/ea9d3cffa8e2728733ff1c028a7ef401.png)
 
 - 所有接口均可以使用自定义IO口来实现。
 - 使用CubeMX进行配置时，使用DCMI（对于8位宽摄像头，有8+3个IO口自动配置好）和I2C配置IO口（SCL和SDA，2个IO口自动配置好），然后再自定义RCC的MCO（master clock output）口提供XCLK时钟（1个IO口）。再加上供电的3.3V和GND。
@@ -661,11 +661,11 @@ OV7725和AL422B原理图：
 
 #### 硬件接线与CubeMX配置
 
-![25B3F06E432C5110E661DB16C55EBE1F.png](../_resources/25B3F06E432C5110E661DB16C55EBE1F.png)
+![25B3F06E432C5110E661DB16C55EBE1F.png](/_resources/25B3F06E432C5110E661DB16C55EBE1F.png)
 
 使用杜邦线按照名称一一连接，并注意把排线撕开以免产生信号干扰：
 
-![bc679ac3858f1523a78adf9a191241a1.png](../_resources/bc679ac3858f1523a78adf9a191241a1.png)
+![bc679ac3858f1523a78adf9a191241a1.png](/_resources/bc679ac3858f1523a78adf9a191241a1.png)
 
 - OV2640完全能够由板子的3.3V供电（官方板子供电电压不足额，用万用表测试得到）正常工作（至少SCCB匹配能够成功），注意如果使用其他供电源GND需要与3.3V共地。但是不同供电电压的表现不同，在高波特率下，SCCB匹配仍能成功，但图像传输的数据在使用外部标准3.3V供电时会出现错误使得无法通过串口助手的JPEG编码转换。
 
@@ -673,31 +673,31 @@ OV7725和AL422B原理图：
 这样，STM32F4的 DCMI 接口就必须设置为：VSYNC帧同步信号低电平有效，HSYNC行同步信号低电平有效和PIXCLK上升沿有效。
 也就是说：STM32通过DCMI接口和OV2640进行通讯时，OV2640负责输出采集到的帧，也就是图片，STM32负责采集；所以双方的设置应该恰好相反，OV2640设置PCLK下降沿输出，那么与此同时STM32就必须设置上升沿捕获：
 
-![a850cd2f9e8da7b30c75ee07f21dda3d.png](../_resources/a850cd2f9e8da7b30c75ee07f21dda3d.png)
+![a850cd2f9e8da7b30c75ee07f21dda3d.png](/_resources/a850cd2f9e8da7b30c75ee07f21dda3d.png)
 
-![372b491041f2faffcbb0d5ab44c7bd9a.png](../_resources/372b491041f2faffcbb0d5ab44c7bd9a.png)
+![372b491041f2faffcbb0d5ab44c7bd9a.png](/_resources/372b491041f2faffcbb0d5ab44c7bd9a.png)
 
 - 配置DCMI完成，获得对应的引脚：
 
-![418d27fe739dc617aad438a7b18aa111.png](../_resources/418d27fe739dc617aad438a7b18aa111.png)
+![418d27fe739dc617aad438a7b18aa111.png](/_resources/418d27fe739dc617aad438a7b18aa111.png)
 
 - PWDN和RESET引脚使用普通输出GPIO（设置为推挽输出）即可。不使用硬件I2C，使用普通输出GPIO进行模拟SCCB，SCCB的SCL引脚使用普通输出GPIO（推挽输出），SCCB的SDA引脚使用普通输出（一定需要开漏输出）。SCCB_SCL引脚接OV2640的SCL，SCCB_SDA引脚接OV2640的SDA：
 
-![363068422711b65e9c4ff86e2a911d94.png](../_resources/363068422711b65e9c4ff86e2a911d94.png)
+![363068422711b65e9c4ff86e2a911d94.png](/_resources/363068422711b65e9c4ff86e2a911d94.png)
 
 - RCC配置（配置了MCO可以用于为不内置时钟的摄像头提供时钟，本次项目OV2640自带时钟）：
 
-![093656dd8f33ee6adaacd6dc1510613c.png](../_resources/093656dd8f33ee6adaacd6dc1510613c.png)
+![093656dd8f33ee6adaacd6dc1510613c.png](/_resources/093656dd8f33ee6adaacd6dc1510613c.png)
 
-![cdbe8d3498ca674384581fdc3c685df7.png](../_resources/cdbe8d3498ca674384581fdc3c685df7.png)
+![cdbe8d3498ca674384581fdc3c685df7.png](/_resources/cdbe8d3498ca674384581fdc3c685df7.png)
 
 DMA设置：
 
-![3d63304a22f6d059490e090e6d529748.png](../_resources/3d63304a22f6d059490e090e6d529748.png)
+![3d63304a22f6d059490e090e6d529748.png](/_resources/3d63304a22f6d059490e090e6d529748.png)
 
 USART设置：
 
-![3d1d00d3e3a8dd791c019e6655362ae8.png](../_resources/3d1d00d3e3a8dd791c019e6655362ae8.png)
+![3d1d00d3e3a8dd791c019e6655362ae8.png](/_resources/3d1d00d3e3a8dd791c019e6655362ae8.png)
 
 ### TFT触摸液晶屏（屏幕和触摸功能均通过SPI驱动）（带SD卡槽，2.4寸，驱动IC为ILI9341）
 
@@ -727,11 +727,11 @@ SPI 通讯使用3条总线及片选线，3 条总线分别为 SCK、MOSI、MISO�
 
 多设备的SPI通讯接线：
 
-![9e0cc5b3d8477f8ad237c7e2b24df601.png](../_resources/9e0cc5b3d8477f8ad237c7e2b24df601.png)
+![9e0cc5b3d8477f8ad237c7e2b24df601.png](/_resources/9e0cc5b3d8477f8ad237c7e2b24df601.png)
 
 SPI时序图：
 
-![12dd6fcef97d382f76e3b139e25b96a4.png](../_resources/12dd6fcef97d382f76e3b139e25b96a4.png)
+![12dd6fcef97d382f76e3b139e25b96a4.png](/_resources/12dd6fcef97d382f76e3b139e25b96a4.png)
 
 SPI 有四种工作模式，通过串行时钟极性(CPOL)和相位(CPHA)的搭配来得到四种工作模式：
         ①、CPOL=0，串行时钟空闲状态为低电平。
@@ -754,7 +754,7 @@ SPI 有四种工作模式，通过串行时钟极性(CPOL)和相位(CPHA)的搭�
 - SPI相关引脚均上拉后发现一直读出0xFF，再进行拔掉测试，发现仍一直读出0xFF。但是在上拉前间隔读出0和0xFF，拔掉测试发现一直读出0，太奇怪了。
 - SPI和I2C一样，先读ID，读不出ID外设的初始化都别想过。ILI9341芯片手册的读ID指令：
 
-![3f48eca9721b1937e9b1759122024646.png](../_resources/3f48eca9721b1937e9b1759122024646.png)
+![3f48eca9721b1937e9b1759122024646.png](/_resources/3f48eca9721b1937e9b1759122024646.png)
 
 - 每一种STM32芯片的某些引脚，通过CubeMX配置成GPIO_Output还是可能不能进行电平的编辑，这类似于STM32F103ZET6的某些用于JTAG的引脚要复用为其他功能的引脚时需要进行额外的操作的原理应该是相同的。而且，某些引脚还出于未知原因，在相同的配置下，电平的转换是有延迟的，可能无法满足通信协议的时许要求，这通过逻辑分析仪可以查看到。
 - TFTLCD成功调通（通过更换适合的引脚，直到逻辑分析仪显示单片机输出的SPI信号时序完全正确，符合协议的时序图即可），但读ID指令仍无法返回ID，仍返回0和0xFF。而且时序正确且能读出单片机的输出的SPI信号为准确的话，也不需要进行提前的寄存器清空，SPI相关引脚的上拉电阻的配置，SPI频率倒是确实要压到10M以下最好。
@@ -780,19 +780,19 @@ SPI 有四种工作模式，通过串行时钟极性(CPOL)和相位(CPHA)的搭�
 
 SDRAM的控制参数：
 
-![d9a2edef51b52e064271b3f8cb3fee75.png](../_resources/d9a2edef51b52e064271b3f8cb3fee75.png)
+![d9a2edef51b52e064271b3f8cb3fee75.png](/_resources/d9a2edef51b52e064271b3f8cb3fee75.png)
 
 通过原理图，得到STM32F429I-DISCO板载IS42S16400的对应引脚（SDCKE1和SDNE1）：
 
-![2cf6ecdafab762748a099ab02319254f.png](../_resources/2cf6ecdafab762748a099ab02319254f.png)
+![2cf6ecdafab762748a099ab02319254f.png](/_resources/2cf6ecdafab762748a099ab02319254f.png)
 
 通过IS42S16400J手册，得到bank数（4）和数据宽度（16bit）：
 
-![dbce79ff7a871218665d7cc9b8e3b36f.png](../_resources/dbce79ff7a871218665d7cc9b8e3b36f.png)
+![dbce79ff7a871218665d7cc9b8e3b36f.png](/_resources/dbce79ff7a871218665d7cc9b8e3b36f.png)
 
 通过IS42S16400J手册，得到地址宽度（12行与8列，但分时复用，因此地址宽度为12bit）：
 
-![76df36a16ebe0b018d1ee58f8cebc9a6.png](../_resources/76df36a16ebe0b018d1ee58f8cebc9a6.png)
+![76df36a16ebe0b018d1ee58f8cebc9a6.png](/_resources/76df36a16ebe0b018d1ee58f8cebc9a6.png)
 
 CL（CAS Latency）：
 
@@ -822,7 +822,7 @@ SDRAM的时序参数与计算方法：
 
 - 按照SDCLK为90MHz的话（HCLK二分频），每个时钟周期就是11.1ns。
 
-![a4a888c1f7ea1c2bf51a8850dfba9b0d.png](../_resources/a4a888c1f7ea1c2bf51a8850dfba9b0d.png)
+![a4a888c1f7ea1c2bf51a8850dfba9b0d.png](/_resources/a4a888c1f7ea1c2bf51a8850dfba9b0d.png)
 
 - tMRD（/Load mode register to active delay）：2 Clock cycles。
 - tXSR（Exit Self-Refresh to Active Time/Exit self-refresh delay）：min=70ns (7x11.10ns) 。7 Clock cycles。
@@ -840,13 +840,13 @@ SDRAM的时序参数与计算方法：
 
 STM32CubeMX配置SDRAM1：
 
-![370144add904ceb914e3efb5cd38bd05.png](../_resources/370144add904ceb914e3efb5cd38bd05.png)
+![370144add904ceb914e3efb5cd38bd05.png](/_resources/370144add904ceb914e3efb5cd38bd05.png)
 
-![e69ca0c027aa930dcfcf4f6d21b157b5.png](../_resources/e69ca0c027aa930dcfcf4f6d21b157b5.png)
+![e69ca0c027aa930dcfcf4f6d21b157b5.png](/_resources/e69ca0c027aa930dcfcf4f6d21b157b5.png)
 
-![38706382b7f3fdc373810d8d73f64de3.png](../_resources/38706382b7f3fdc373810d8d73f64de3.png)
+![38706382b7f3fdc373810d8d73f64de3.png](/_resources/38706382b7f3fdc373810d8d73f64de3.png)
 
-![5b8501dbbe865254bdb8c8c3bcd301ce.png](../_resources/5b8501dbbe865254bdb8c8c3bcd301ce.png)
+![5b8501dbbe865254bdb8c8c3bcd301ce.png](/_resources/5b8501dbbe865254bdb8c8c3bcd301ce.png)
 
 #### STM32CubeMX工程修改
 
@@ -862,7 +862,7 @@ STM32CubeMX配置SDRAM1：
 
 配置模式寄存器：
 
-![543d9bd9d0ee586cdcb21eab7803dc6b.png](../_resources/543d9bd9d0ee586cdcb21eab7803dc6b.png)
+![543d9bd9d0ee586cdcb21eab7803dc6b.png](/_resources/543d9bd9d0ee586cdcb21eab7803dc6b.png)
 
 - A[2-0]：突发模式读取数，F429的SDRAM不支持突发模式，所以一次读一个，设置为000
 - A3 ：1为间隔模式即每次读取4个字节会延迟一会儿，0为连续模式，我们选择连续模式，设置为0
@@ -875,15 +875,15 @@ STM32CubeMX配置SDRAM1：
 
 - FMC_SDRTR寄存器：
 
-![e8a199371172d192f1f7e9e962fd63cb.png](../_resources/e8a199371172d192f1f7e9e962fd63cb.png)
+![e8a199371172d192f1f7e9e962fd63cb.png](/_resources/e8a199371172d192f1f7e9e962fd63cb.png)
 
 - F429频率为180Mhz，经过cubeMX的二分频，得到SDRAM时钟频率就是90Mhz。
 
-![fe233c676af7310aca542953f68cd496.png](../_resources/fe233c676af7310aca542953f68cd496.png)
+![fe233c676af7310aca542953f68cd496.png](/_resources/fe233c676af7310aca542953f68cd496.png)
 
 - IS42S16400J刷新周期（64ms）和行数（4096）可以在IS42S16400J得手册中查找：
 
-![3af1447318f1e5fb1cccc525277c8bbf.png](../_resources/3af1447318f1e5fb1cccc525277c8bbf.png)
+![3af1447318f1e5fb1cccc525277c8bbf.png](/_resources/3af1447318f1e5fb1cccc525277c8bbf.png)
 
 - 可以通过计算得到Refresh Rate：
 
@@ -993,12 +993,12 @@ int Flag=0;
 - 引脚连接不稳也会使得接受到的图像马赛克花屏、只有部分图像、撕裂现象。
 - SCCB匹配后传输的图像数据连JPEG文件头都没有，需要进行硬件排查（例如D#的断线）。利用串口输出图像数据，jpeg的SOI（start of image） 为FF D8，EOD（end of image）为FF D9。在SOI后，老式相机采用JFIF格式，即以FF E0开始，头部含有 .. JFIF...信息。现在Exif更加流行，以FF E1开始。
 
-![934d404e481dbb784d2481efb825f3aa.png](../_resources/934d404e481dbb784d2481efb825f3aa.png)
+![934d404e481dbb784d2481efb825f3aa.png](/_resources/934d404e481dbb784d2481efb825f3aa.png)
 
 - SOI（文件头）+APP0（图像识别信息）+ DQT（定义量化表）+ SOF（图像基本信息）+ DHT（定义Huffman表） + DRI（定义重新开始间隔）（非必须）+ SOS（扫描行开始）+ EOI（文件尾）。
 - JPEG 文件的格式是分为一个一个的段来存储的，段的多少和长度并不是一定的。JPEG文件的每个段都一定包含两部分，一个是段的标识，它由两个字节构成：第一个字节是十六进制0xFF，第二个字节对于不同的段，这个值是不同的。紧接着的两个字节存放的是这个段的长度（除了前面的两个字节0xFF和0xXX，X表示不确定。他们是不算到段的长度中的）。注意：这个长度的表示方法是按照高位在前，低位在后的。段标识（1Byte）+段类型（1Byte）+段长度（2Byte）+段内容（…）。段标识已经固定为：0xFF。段类型就有很多种。例如SOI 开头两个字节：0xFFD8。例如EOI 结尾两个字节：0xFFD9。段类型：
 
-![5b90ea104a2b44b23ef24760eba0bf19.png](../_resources/5b90ea104a2b44b23ef24760eba0bf19.png)
+![5b90ea104a2b44b23ef24760eba0bf19.png](/_resources/5b90ea104a2b44b23ef24760eba0bf19.png)
 
 - 串口输出的JPEG的头为FF D9，跟FF E1（OV2640应当是FF E0 00 10），在数据的最后跟大量的01（一般应当是大量的00），也就是说除了段标识仍为FF，段类型均右移了1位。这种情况就有可能是某条数据线D#断路。1111 1111 /1101 1001 /FF D9错误，1111 1111 /1101 1000 /FF D8正确，因此问题应当是：数据线D0一直为高（1），因此段标识仍为FF，其他数据均右移1位，因此判断数据线D0断线，万用表测出电压几乎为0。换线之后，右移1位被修复，用万用表测，正常的数据线D#的电压应当都是一致且不断变化且大致上与供电电压大概一半的电压的上下浮动。
 - - 串口输出的JPEG的头为FB D8，跟FB E0，尾为FB D9，FB（1111 1011）错误，因此问题应当是：数据线D2一直为低（0），但不是完全断路，万用表测出电压不足供电电压大小。换线之后，问题被修复，电压恢复，是与其他数据引脚一样的不断变化的较低电压。
@@ -1029,7 +1029,7 @@ int Flag=0;
 - 通过SCCB调整OV2640输出为RGB565模式，其他可以继续沿用JPEG模式的设置。使用串口助手保存窗口到txt文件，然后上位机使用Python将RGB565转化为RGB888格式进行PNG显示，有几率能够显示正常图像。while(1)其他语句注释，或者即使没有注释偶尔也会有几率花屏无法显示正常图像（其他语句明明会printf其他调试信息），而即使没有注释，图像会出现一定的乱码（其他printf语句造成）的同时，还会有花纹，或者画面割裂（看起来像是两张图片各一半合并），无法消除。这和在串口助手窗口捕捉到的数据也有关系，首先不能包含太多例如初始化函数输出的调试信息，需要在摄像头稳定运行一段时间后，通过观察串口输出数据的间隔，取两帧（上位机解码只会解码前一帧长度的像素）完整进行保存。还有，试着把摄像头拿起并且上下对正要拍摄的景物，效果会更好。花屏的原因好像是丢失字节。
 - 串口和st-link utility的连接是可以同时适用的。
 - 微控制器的RAM是SRAM而不是DRAM，速度更快。而ROM是Flash，因为为了能够重复烧录并且断电保存。
-- X-CUBE-AI包，![87fc4d7bead66dd16563be73da60d6a6.png](../_resources/87fc4d7bead66dd16563be73da60d6a6.png)处能够设置External RAM和External Flash。注意X-CUBE-AI涉及的变量在定义时处于外部内存的地址需要在代码中手动进行设置，STM32CubeMX和X-CUBE-AI只是能够让你能够成功生成代码（不然X-CUBE-AI认为Flash或RAM不够是无法生成代码的，因为它不知道是否有外部内存），不会自动把涉及的变量定义在外部内存里。
+- X-CUBE-AI包，![87fc4d7bead66dd16563be73da60d6a6.png](/_resources/87fc4d7bead66dd16563be73da60d6a6.png)处能够设置External RAM和External Flash。注意X-CUBE-AI涉及的变量在定义时处于外部内存的地址需要在代码中手动进行设置，STM32CubeMX和X-CUBE-AI只是能够让你能够成功生成代码（不然X-CUBE-AI认为Flash或RAM不够是无法生成代码的，因为它不知道是否有外部内存），不会自动把涉及的变量定义在外部内存里。
 - 把activation buffer变量和存放输入数据的变量都存放在外部内存时，X-CUBE-AI相关的程序运行速度大大降低了。
 - OV2640，jpeg模式图片没问题，rgb565模式颜色不对（彩色花屏）、黑屏噪点（黑屏也有颜色点）、干扰条纹（照片中有一些条纹波纹）、且有部分画面不显示（某一边的画面看起来像是另一边的上面部分）。彩色花屏和黑屏噪点应该是字节错位了，因为两个字节一个RGB565像素，如果字节在开头多了一个或少了一个，都会造成全部像素的颜色完全偏离，比较简单的解决方法就是如果发现彩色花屏则把rgb565模式接收到的数据的第一个字节省略掉即可。部分画面不显示和部分画面重复主要画面的一部分的情况，怀疑可能是摄像头窗口设置长宽颠倒或者摄像头rgb模式只能输出正方形造成的，但之后发现是显示相关代码的设置造成的，因为DCMI采集到的数据是按一行一行来还是一列一列来是未知的，所以解码时高和宽的设置就会先入为主。如果将宽度设置成高度的值来解码，那么部分画面就不显示，因为没有读取剩余的宽度的像素值，如果将宽度设置成比高度更大的值来解码，那么部分画面就会重复主要画面的一部分，因为多出来的宽对应的数据是下一行的开头的像素值，怀疑DCMI采集160 * 120但多出来的8个字（32个字节）是为了填补这部分空缺的。如果将高度设置成宽度的值来解码，那么就会部分画面就黑屏，因为多出来的高对应的数据是不存在的。
 - X-CUBE-AI包，设置External Flash，External RAM页面可以将权重复制到External RAM中，以减少将权重放置到External Flash的延迟。
@@ -1070,7 +1070,7 @@ int Flag=0;
 - 量化方案：量化感知训练（QAT）、训练后量化（PTQ）。将训练好的模型量化可能会由于累积的数值误差而对模型的准确性产生负面影响。为了恢复性能下降，通常需要调整网络参数。在QAT中，量化模型的前向和后向传递是以浮点数进行，并且在每次梯度更新后对网络参数进行量化。而在PTQ中，则是在不重新训练网络的情况下进行量化和参数调整。
 - 量化部署方案/推理（inference）方案：伪量化/模拟量化、仅整数量化/定点量化。推理就是将训练好的模型进行应用，根据输入得到输出的过程。在伪量化/模拟量化方法中，权重和激活值以低精度存储，但是从加法到矩阵乘法的所有操作都以浮点精度执行，尽管这种方法在浮点操作之前或之后需要不断地解量化和量化，但它有利于模型的准确性。然而，在仅整数量化/定点量化方法中，操作和权重/激活值存储都是用低精度整数算术执行，这样以来，模型可以利用大多数硬件支持的快速整数算术。
 
-![c3a53f2230c40d83af036d051e52b1c2.png](../_resources/c3a53f2230c40d83af036d051e52b1c2.png)
+![c3a53f2230c40d83af036d051e52b1c2.png](/_resources/c3a53f2230c40d83af036d051e52b1c2.png)
 
 ### 知识蒸馏
 
