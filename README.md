@@ -1,14 +1,6 @@
 ## 目录
-
-    - OV7725摄像头的使用（带FIFO）（转载未确认的参考资料）
-      - 时钟配置
-      - DCMI
-      - DMA
-      - 相关HAL库函数
-      - OV7725引脚定义
-      - LTDC（STM32F429官方板子自带显示屏）（STM32F429ZI6的LTDC与DCMI冲突）
-      - 摄像头采集数据过程
-  - 基于STMF429ZIT6（STMF429I-Disco）的非机动车目标检测
+  - 部分参考转载内容。
+  - 基于STMF429ZIT6（STMF429I-Disco）的非机动车目标检测（项目流程与笔记）
     - 通过X-Cube-AI部署HAR/HPE模型例程（STM32f429ZIT6）
     - STM32CubeMX、STM32CubeIDE进行X-Cube-AI相关环境搭建问题
     - X-Cube-AI用到的Python库安装
